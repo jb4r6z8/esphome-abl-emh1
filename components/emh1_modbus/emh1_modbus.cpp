@@ -214,7 +214,7 @@ void eMH1Modbus::send_currentd2(uint16_t x) {
 	tx_message->Destination = 0x0014;		// Set Ic Max
 	tx_message->DataLength = 0x0001;		// 1 16-bit register
 	tx_message->WriteBytes = 0x02;			// quantity of value bytes
-	uint16_t v = std::floor(0.1667*x100);
+	uint16_t v = std::floor(0.1667*x*100);
   ESP_LOGD(TAG, "Set Max Current to %d Amps (0x%04X)", x, v);
 	uint8_t v1 = 0 + (v >> 8);
 	uint8_t v2 = 0 + (v & 0x00FF);
