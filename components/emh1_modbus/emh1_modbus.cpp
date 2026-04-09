@@ -206,7 +206,7 @@ void eMH1Modbus::send_current(uint8_t x) {
 	this->send();
 }
 
-// set Max current
+// set Max current with 2 decimals by multiple by 100
 void eMH1Modbus::send_currentd2(uint8_t x) {
 	eMH1MessageT *tx_message = &this->emh1_tx_message;
   tx_message->DeviceId = 0x01;				// default address
