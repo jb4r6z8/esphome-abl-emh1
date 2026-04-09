@@ -206,6 +206,24 @@ void eMH1Modbus::send_current(uint8_t x) {
 	this->send();
 }
 
+// set Max current
+void eMH1Modbus::send_currentd2(uint8_t x) {
+	eMH1MessageT *tx_message = &this->emh1_tx_message;
+  tx_message->DeviceId = 0x01;				// default address
+	tx_message->FunctionCode = 0x10;		// write operation
+	tx_message->Destination = 0x0014;		// Set Ic Max
+	tx_message->DataLength = 0x0001;		// 1 16-bit register
+	tx_message->WriteBytes = 0x02;			// quantity of value bytes
+	uint16_t v = std::floor(0.1667*x100);
+  ESP_LOGD(TAG, "Set Max Current to %d Amps (0x%04X)", x, v);
+	uint8_t v1 = 0 + (v >> 8);
+	uint8_t v2 = 0 + (v & 0x00FF);
+	tx_message->Data[0] = v1;
+	tx_message->Data[1] = v2;
+	this->send();
+}
+
+
 // send enable/disable
 void eMH1Modbus::send_enable(uint8_t x) {
 	eMH1MessageT *tx_message = &this->emh1_tx_message;
